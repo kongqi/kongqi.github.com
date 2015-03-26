@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Encrypt/Decrypt</title>
+    <style type="text/css">
+        .textarea {
+            width: 400px;
+            height: 200px;
+        }
+
+        .button {
+            margin: 10px 10px 10px 10px;
+        }
+
+        label {
+            font-size: 10px;
+        }
+    </style>
+    <script src="rc4.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var source = document.getElementById("txtSource"), result = document.getElementById("txtResult"), key = document.getElementById("txtKey");
+            document.getElementById("btnEncrypt").onclick = function () {
+                result.value = "";
+                result.value = myEncrypt(source.value, key.value);
+            };
+            document.getElementById("btnDecrypt").onclick = function () {
+                source.value = "";
+                source.value = myDecrypt(result.value, key.value);
+            };
+        };
+
+        function myEncrypt(val, key) {
+            return CryptoJS.RC4.encrypt(val, key);
+        }
+
+        function myDecrypt(val, key) {
+            return CryptoJS.RC4.decrypt(val, key).toString(CryptoJS.enc.Utf8);;
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <label for="txtSource">明文：</label><br />
+        <textarea id="txtSource" class="textarea"></textarea>
+        <br />
+        <input id="btnEncrypt" class="button" type="button" value="加密" />
+        <input id="btnDecrypt" class="button" type="button" value="解密" />
+        <label for="txtResult">秘钥：</label><input id="txtKey" type="text" value="" />
+        <br />
+        <label for="txtResult">密文：</label><br />
+        <textarea id="txtResult" class="textarea"></textarea>
+    </div>
+</body>
+</html>
